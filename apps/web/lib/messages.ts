@@ -11,6 +11,7 @@ const passkeyMessages: Record<PasskeyErrorCode, string> = {
   unsupported: "This browser doesn't support the required passkey features.",
   security: "Passkeys are blocked in this context. Make sure you're on the official Vellar site.",
   aborted: "The passkey request was interrupted. Try again.",
+  "no-authenticator": "No passkey authenticator is available on this device.",
   unknown: "Something went wrong with the passkey prompt. Try again.",
 };
 

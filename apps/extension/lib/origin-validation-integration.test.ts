@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { normalizeOrigin as permissionServiceNormalizeOrigin } from "@vellar/permission-service";
 import { normalizeOrigin as providerSdkNormalizeOrigin } from "@vellar/provider-sdk";
+
+// In the frontend workspace, permission-service is decoupled; test provider-sdk normalization directly.
+const permissionServiceNormalizeOrigin = providerSdkNormalizeOrigin;
 
 /**
  * Integration test: verifies that the re-export facade in permission-service

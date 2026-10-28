@@ -228,11 +228,11 @@ export function parseResponseEnvelope(data: unknown): ResponseEnvelope | undefin
 }
 
 export function requestEnvelope(id: string, request: ProviderRequest): RequestEnvelope {
-  return { channel: PROVIDER_CHANNEL, kind: "request", id, request };
+  return { channel: PROVIDER_CHANNEL, kind: "request", id, version: PROTOCOL_VERSION, request };
 }
 
 export function responseEnvelope(id: string, payload: ResponsePayload): ResponseEnvelope {
-  return { channel: PROVIDER_CHANNEL, kind: "response", id, payload };
+  return { channel: PROVIDER_CHANNEL, kind: "response", id, version: PROTOCOL_VERSION, payload };
 }
 
 export function errorPayload(code: ProviderErrorCode, message: string): ResponsePayload {

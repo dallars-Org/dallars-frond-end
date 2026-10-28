@@ -138,6 +138,7 @@ describe("submitTransaction", () => {
 describe("session client ↔ server seam (real buildServer)", () => {
   // Adapt Fastify's inject() to a fetch-shaped function the client can call.
   async function seamBackend() {
+    // @ts-ignore - wallet-service server is in the backend repository
     const { buildServer } = await import("@vellar/wallet-service/server");
     const app = buildServer({
       submitter: { submit: async () => ({ hash: "txhash" }) },

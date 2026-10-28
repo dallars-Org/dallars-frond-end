@@ -28,6 +28,7 @@ export function WalletProvider({
   connector,
   payments,
   swaps,
+  initialSession,
 }: {
   children: ReactNode;
   /** Test seam: inject a fake connector instead of the real PasskeyKit one. */
@@ -36,15 +37,21 @@ export function WalletProvider({
   payments?: PaymentClient;
   /** Test seam: inject a fake swap client. */
   swaps?: SwapClient;
+  /** Test seam: initial session to seed the store. */
+  initialSession?: WalletSession;
 }) {
-  const [store] = useState(() =>
-    createSessionStore(
+  const [store] = useState(() => {
+    const s = createSessionStore(
       // SSR renders with an inert adapter; the browser store restores from localStorage.
       typeof window === "undefined"
         ? createMemoryStorageAdapter()
         : createWebStorageAdapter(window.localStorage),
-    ),
-  );
+    );
+    if (initialSession) {
+      s.setState({ session: initialSession, status: "connected" });
+    }
+    return s;
+  });
 
   useEffect(() => {
     void store.getState().restore();

@@ -97,6 +97,10 @@ export function SendPayment({
     resolver: zodResolver(formSchema),
     defaultValues: { to: prefill?.to ?? "", amount: prefill?.amount ?? "", memo: "" },
   });
+  const destination = form.watch("to");
+  const memoValue = form.watch("memo");
+  const showMemoWarning =
+    isMemoRequiredDestination(destination) && (!memoValue || memoValue.trim() === "");
 
   /** Inline pre-signing check against the locally known balance. Returns true
    * when the amount is fine (or we have no balance to check against). */

@@ -133,8 +133,8 @@ describe("connector-factory", () => {
 
       const runtime = await getWalletRuntime();
       const result = await runtime.connector.createWallet({
-        keyId: "key-123",
-        name: "test",
+        username: "test",
+        network: "testnet",
       });
 
       expect(mockConnector.createWallet).toHaveBeenCalled();
@@ -235,7 +235,7 @@ describe("connector-factory", () => {
       const runtime = await getWalletRuntime();
 
       try {
-        await runtime.connector.createWallet({ keyId: "key-123", name: "test" });
+        await runtime.connector.createWallet({ username: "test", network: "testnet" });
         expect.fail("Should have thrown");
       } catch (error) {
         const err = error as ConnectorInitError;

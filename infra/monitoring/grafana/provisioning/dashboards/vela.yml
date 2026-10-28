@@ -1,8 +1,0 @@
-apiVersion: 1
-providers:
-  - name: vela
-    folder: Vellar
-    type: file
-    disableDeletion: false
-    options:
-      path: /var/lib/grafana/dashboards

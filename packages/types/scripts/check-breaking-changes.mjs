@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // check-breaking-changes — flags removed or narrowed exported types in
 // packages/types without an accompanying BREAKING comment (issue #552).
 

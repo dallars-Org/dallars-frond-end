@@ -177,9 +177,9 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
       // The kit skips /wallet/connect when it resolves the wallet by
       // derivation (the normal case), so open the server session here.
       // Wrap to detect runtime failures distinct from init-time failures.
-      connectWallet: async (network) => {
+      connectWallet: async (...args: Parameters<WalletConnector["connectWallet"]>) => {
         try {
-          const result = await kitConnector.connectWallet(network);
+          const result = await kitConnector.connectWallet(...args);
           return ensureServerSession(result, backend);
         } catch (error) {
           throw createConnectorError(
@@ -190,9 +190,9 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
         }
       },
       // Wrap createWallet to detect runtime failures
-      createWallet: async (input) => {
+      createWallet: async (...args: Parameters<WalletConnector["createWallet"]>) => {
         try {
-          return await kitConnector.createWallet(input);
+          return await kitConnector.createWallet(...args);
         } catch (error) {
           throw createConnectorError(
             "NO_FALLBACK",
@@ -220,7 +220,7 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
       network: config.network,
       signedToXdr: defaultSignedToXdr,
     }),
-    resume: (keyId) => {
+    resume: (keyId: string) => {
       try {
         return resumeKitConnection(kitLike, keyId);
       } catch (error) {
@@ -231,7 +231,7 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
         );
       }
     },
-    async addDeviceSigner(devicePublicKeyHex) {
+    async addDeviceSigner(devicePublicKeyHex: string) {
       const { SignerStore } = await import("passkey-kit");
       const { StrKey } = await import("@stellar/stellar-sdk");
       const publicKey = StrKey.encodeEd25519PublicKey(Buffer.from(devicePublicKeyHex, "hex"));
@@ -255,15 +255,15 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
     // (policy-signer.ts) so the standalone-signer + recovery-key invariants
     // are unit-tested at the WIRING layer (RA-6), not just at the pure
     // policyAttachArgs. The browser-only passkey-kit enums are injected.
-    async attachPolicy(policyContractId) {
+    async attachPolicy(policyContractId: string) {
       const { SignerKey, SignerStore } = await import("passkey-kit");
       return policySignerActions({ SignerKey, SignerStore }).attachPolicy(policyContractId);
     },
-    async detachPolicy(policyContractId) {
+    async detachPolicy(policyContractId: string) {
       const { SignerKey, SignerStore } = await import("passkey-kit");
       return policySignerActions({ SignerKey, SignerStore }).detachPolicy(policyContractId);
     },
-    async listSigners(accountId) {
+    async listSigners(accountId: string) {
       const { MercuryIndexer, SignerKey } = await import("passkey-kit");
       const indexer = MercuryIndexer.forNetwork({ rpc: kit.rpc }, config.networkPassphrase);
       if (!indexer) throw new Error("No signer indexer is available for this network.");
@@ -285,20 +285,20 @@ async function initializePasskeyKitRuntime(config: ReturnType<typeof walletConfi
       }
       return confirmed;
     },
-    async addPasskeySigner(label) {
+    async addPasskeySigner(label: string) {
       const { SignerKey, SignerStore } = await import("passkey-kit");
       return signerActions({ SignerKey, SignerStore }).addPasskeySigner(label);
     },
-    async addAgentKey(input) {
+    async addAgentKey(input: AddAgentKeyInput) {
       const { SignerKey, SignerStore } = await import("passkey-kit");
       return signerActions({ SignerKey, SignerStore }).addAgentKey(input);
     },
-    async removeSigner(key) {
+    async removeSigner(key: SignerKeyRef) {
       const { SignerKey, SignerStore } = await import("passkey-kit");
       return signerActions({ SignerKey, SignerStore }).removeSigner(key);
     },
-    walletVersion: (accountId) => upgradeActions().status(accountId),
-    upgradeWallet: (accountId) => upgradeActions().upgrade(accountId),
+    walletVersion: (accountId: string) => upgradeActions().status(accountId),
+    upgradeWallet: (accountId: string) => upgradeActions().upgrade(accountId),
   };
 
   /** Bind the extracted upgrade actions (wallet-upgrade.ts) to this
