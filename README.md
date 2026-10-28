@@ -1,18 +1,18 @@
-# Vellar Frontend (vellar-dapp)
+# Dallars Frontend (dallars-frond-end)
 
 <img width="5410" height="2088" alt="Full Logo White" src="https://github.com/user-attachments/assets/2eb47ce8-095d-4ce2-b64f-af530b7ce0f9" />
 
-**Vellar** is a web-first Stellar smart wallet with a companion browser extension.
+**Dallars** is a web-first Stellar smart wallet with a companion browser extension.
 Passkey onboarding (no seed phrases), programmable on-chain account policies,
 contract verification & trust signals, and account cleanup/merge tooling.
 
-The SDK that powers Vellar is published separately as
+The SDK that powers Dallars is published separately as
 [`vellar-sdk`](https://github.com/Vellar-Wallet/vellar-sdk), with full docs at
 **[docs.vellar.xyz](https://docs.vellar.xyz)**.
 
-> **Note**: The codebase is split into two repositories:
-> - **Frontend** (`vellar-dapp` / `vellar-frontend`): Web application, companion browser extension, and frontend client SDKs.
-> - **Backend** (`vellar-backend`): Backend microservices, Soroban smart contracts, and Docker/infra.
+> **Note**: The project is divided into two repositories:
+> - **Frontend** (`dallars-frond-end`): Web application, companion browser extension, and frontend client SDKs.
+> - **Backend** (`dallars-backend`): Backend microservices, Soroban smart contracts, and Docker/infra.
 
 ## Layout
 
